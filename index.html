@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PATTYDE VAAL™ — The Most Useless AI Tail Straightening Machine</title>
+  <meta name="description" content="A totally useless scientific experiment trying to straighten a dog's tail with ridiculous AI technology. Thinker Hub Hackathon Entry.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient glow filters -->
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="ambient-glow glow-gold"></div>
+
+  <!-- STAGE 0: INTRO COUNTDOWN OVERLAY -->
+  <div id="stage-intro" class="overlay-stage">
+    <div class="intro-content">
+      <div class="intro-badge">⚡ THINKER HUB HACKATHON — USELESS PROJECT EDITION</div>
+      <h2 class="intro-title-primary">WELCOME TO THE WORLD'S MOST USELESS EXPERIMENT</h2>
+      <h1 class="intro-title-main">PATTYDE VAAL™</h1>
+      <p style="color: var(--neon-cyan); font-family: var(--font-mono); font-size: 15px;">
+        “പട്ടിയുടെ വാൽ പന്തീരാണ്ടു കൊല്ലം കുഴലിലിട്ടാലും നേരെയാവില്ല”
+      </p>
+
+      <div class="intro-countdown-box">
+        <div id="intro-count-num" class="intro-countdown-num">3</div>
+      </div>
+
+      <div id="intro-status-text" class="intro-loading-text">Scientific seriousness loading...</div>
+      <p class="intro-subtext">Please prepare yourself for absolutely nothing useful.</p>
+
+      <button id="btn-skip-intro" class="btn-action btn-primary" style="margin-top: 14px; font-size: 12px; padding: 6px 18px;">
+        SKIP COUNTDOWN ➔
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN APPLICATION SHELL -->
+  <div id="app-container">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="brand-section">
+        <div class="brand-badge">USELESS™ AI LAB</div>
+        <div class="brand-text">
+          <h1>PATTYDE VAAL™</h1>
+          <p>THE MOST USELESS AI-POWERED TAIL STRAIGHTENING MACHINE</p>
+        </div>
+      </div>
+
+      <div class="nav-controls">
+        <div class="status-pill">
+          <span class="pulse-dot"></span>
+          <span id="global-status-text">LAB STATUS: READY</span>
+        </div>
+
+        <button id="btn-toggle-sound" class="btn-icon" title="Toggle Sound FX">
+          <span id="sound-icon">🔊</span>
+          <span id="sound-label">SFX ON</span>
+        </button>
+
+        <button id="btn-read-paper-top" class="btn-icon">
+          📄 RESEARCH PAPER
+        </button>
+      </div>
+    </header>
+
+    <!-- Stage Progress Breadcrumbs -->
+    <nav class="stage-progress" id="progress-bar">
+      <div class="step-indicator" data-step="1">1. MEET PATTY</div>
+      <div class="step-indicator" data-step="2">2. MANUAL STRAIGHTEN</div>
+      <div class="step-indicator" data-step="3">3. AI MACHINE</div>
+      <div class="step-indicator" data-step="4">4. TUBE INSERT</div>
+      <div class="step-indicator" data-step="6">5. RUN EXPERIMENT</div>
+      <div class="step-indicator" data-step="7">6. RESULT</div>
+    </nav>
+
+    <!-- Main Experiment Stage Layout -->
+    <main class="main-stage-area">
+      <!-- Left HUD: Subject Patty Status -->
+      <aside class="hud-panel" id="dog-hud">
+        <div class="panel-header">
+          <span class="panel-title">🐕 SUBJECT: PATTY</span>
+          <span class="panel-sub">ID: #001-RETRIEVER</span>
+        </div>
+
+        <div class="stat-list">
+          <div class="stat-item">
+            <span class="stat-label">Breed:</span>
+            <span class="stat-value">Golden Retriever-ish</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Mood:</span>
+            <span class="stat-value warning" id="stat-dog-mood">Irritated 😠</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Tail Geometry:</span>
+            <span class="stat-value danger" id="stat-tail-curvature">100% Curved</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Straightness:</span>
+            <span class="stat-value danger" id="stat-straightness-val">0%</span>
+          </div>
+          <div class="meter-bar">
+            <div class="meter-fill" id="straightness-meter-fill" style="width: 0%;"></div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Cooperation:</span>
+            <span class="stat-value danger">Negative</span>
+          </div>
+        </div>
+
+        <div style="background: rgba(255,183,3,0.08); border-left: 3px solid var(--neon-gold); padding: 10px; border-radius: 6px; font-size: 11.5px; line-height: 1.4;">
+          <strong style="color: var(--neon-gold); display: block; margin-bottom: 2px;">SCIENTIFIC HYPOTHESIS:</strong>
+          “Regardless of applied mechanical torque, tail curl vector $\vec{C}$ remains invariant.”
+        </div>
+
+        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px;">
+          <button id="btn-poke-dog" class="btn-icon" style="justify-content: center; width: 100%;">
+            👉 Poke The Dog (Test Mood)
+          </button>
+        </div>
+      </aside>
+
+      <!-- Center Lab Viewport & Interactive Stage -->
+      <section class="lab-viewport" id="viewport-container">
+        <!-- Interactive Instruction Banner -->
+        <div class="viewport-banner" id="viewport-banner">
+          <h2 id="banner-title">STAGE 1: MEET THE DOG</h2>
+          <p id="banner-subtitle">Problem detected: Tail refuses to become straight.</p>
+        </div>
+
+        <!-- 10-Second Live Drag / Machine Timer Badge -->
+        <div class="timer-container hidden" id="timer-badge">
+          <span class="timer-title" id="timer-badge-title">TAIL STRAIGHTENING TIMER</span>
+          <span class="timer-digits" id="timer-badge-digits">10</span>
+          <span class="timer-status-msg" id="timer-badge-msg">Applying scientific pressure...</span>
+        </div>
+
+        <!-- Comic Speech Bubbles -->
+        <div id="dog-bubble" class="comic-speech-bubble hidden" style="left: 170px; top: 75px;">
+          <span class="dialogue-ml">എന്റെ വാൽ വിടെടാ! 😭</span>
+          <span class="dialogue-en">Ente vaal videda! 😭</span>
+        </div>
+
+        <div id="human-bubble" class="comic-speech-bubble bubble-scientist hidden" style="right: 120px; top: 100px;">
+          <span class="dialogue-ml">ഇത് നേരെയാവുമോ എന്ന് ഞാൻ നോക്കട്ടെ.</span>
+          <span class="dialogue-en">Ith nerayavonn njan nokkatte.</span>
+        </div>
+
+        <!-- SVG Interactive Lab Scene (Dog + Machine + Scientist) -->
+        <svg id="lab-svg-scene" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <!-- Dog Fur Gradients -->
+            <linearGradient id="dogFurGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFD166"/>
+              <stop offset="60%" stop-color="#F4B236"/>
+              <stop offset="100%" stop-color="#D98A1B"/>
+            </linearGradient>
+
+            <linearGradient id="tailGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#D98A1B"/>
+              <stop offset="50%" stop-color="#F4B236"/>
+              <stop offset="100%" stop-color="#FFE082"/>
+            </linearGradient>
+
+            <!-- Machine Gradients -->
+            <linearGradient id="machineMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#243352"/>
+              <stop offset="50%" stop-color="#152038"/>
+              <stop offset="100%" stop-color="#0b1120"/>
+            </linearGradient>
+
+            <linearGradient id="cyanPlasma" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.8"/>
+              <stop offset="50%" stop-color="#00a8ff" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.8"/>
+            </linearGradient>
+
+            <!-- Filters for glowing neon elements -->
+            <filter id="neonGlowCyan" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+
+            <filter id="neonGlowGold" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Lab Floor Grid & Shadows -->
+          <ellipse cx="260" cy="460" rx="140" ry="24" fill="rgba(0,0,0,0.45)"/>
+          <ellipse cx="620" cy="465" rx="160" ry="26" fill="rgba(0,0,0,0.5)"/>
+          <ellipse cx="830" cy="460" rx="60" ry="16" fill="rgba(0,0,0,0.4)"/>
+
+          <!-- ==================== THE DOG (PATTY) ==================== -->
+          <g id="patty-dog-group">
+            <!-- Back Legs & Paws -->
+            <path d="M 190 350 Q 180 410 185 450 L 225 450 Q 220 400 215 350 Z" fill="#C97B14"/>
+            <path d="M 285 360 Q 290 410 295 450 L 335 450 Q 330 400 310 360 Z" fill="#C97B14"/>
+
+            <!-- THE BENT/CURVED DRAGGABLE TAIL -->
+            <g id="dog-tail-container">
+              <!-- Animated drag guidance arrow (in Stage 2 & 4) -->
+              <path id="tail-guide-arrow" class="hidden" d="M 170 140 Q 300 110 470 230" fill="none" stroke="var(--neon-gold)" stroke-width="3" stroke-dasharray="6,6" opacity="0.6"/>
+
+              <!-- Dynamic Bézier Tail Path -->
+              <path id="dog-tail-path" d="M 195 250 C 140 245, 110 195, 145 165" fill="none" stroke="url(#tailGrad)" stroke-width="28" stroke-linecap="round"/>
+
+              <!-- Fluffy tip tuft -->
+              <circle id="tail-fur-tuft" cx="145" cy="165" r="18" fill="#FFE082"/>
+
+              <!-- Interactive Drag Handle Circle -->
+              <circle id="tail-tip-handle" class="tail-drag-handle" cx="145" cy="165" r="26" fill="rgba(255, 183, 3, 0.25)" stroke="#FFB703" stroke-width="3" filter="url(#neonGlowGold)"/>
+              <circle cx="145" cy="165" r="8" fill="#FFFFFF" pointer-events="none"/>
+            </g>
+
+            <!-- Dog Torso & Breathing Chest -->
+            <g class="dog-chest">
+              <path d="M 190 250 C 185 330, 205 400, 260 410 C 320 410, 365 370, 370 280 C 375 220, 320 200, 270 210 C 220 220, 195 230, 190 250 Z" fill="url(#dogFurGrad)"/>
+              
+              <!-- Front Legs & Paws -->
+              <path d="M 230 360 Q 225 415 220 455 L 260 455 Q 265 410 260 360 Z" fill="url(#dogFurGrad)"/>
+              <ellipse cx="238" cy="455" rx="20" ry="8" fill="#FFE082"/>
+              
+              <path d="M 330 350 Q 340 415 345 455 L 385 455 Q 380 405 365 350 Z" fill="url(#dogFurGrad)"/>
+              <ellipse cx="365" cy="455" rx="20" ry="8" fill="#FFE082"/>
+
+              <!-- Dog Collar with Tag -->
+              <path d="M 305 260 Q 345 285 370 265" fill="none" stroke="#E63946" stroke-width="12" stroke-linecap="round"/>
+              <circle cx="342" cy="283" r="11" fill="#FFD166" stroke="#B3730E" stroke-width="2"/>
+              <text x="342" y="287" font-size="9" font-family="sans-serif" font-weight="bold" fill="#000" text-anchor="middle">★</text>
+            </g>
+
+            <!-- Dog Head & Snout -->
+            <g id="dog-head-group">
+              <!-- Head Base -->
+              <circle cx="340" cy="190" r="54" fill="url(#dogFurGrad)"/>
+
+              <!-- Floppy Ear (Twitches) -->
+              <g class="dog-ear">
+                <path d="M 310 160 C 275 165, 260 220, 275 265 C 285 285, 305 270, 310 240 Z" fill="#D98A1B"/>
+              </g>
+
+              <!-- Snout & Mouth -->
+              <ellipse cx="385" cy="205" rx="34" ry="24" fill="#FFE082"/>
+              <path d="M 390 195 C 400 195, 412 198, 412 205 C 412 215, 395 220, 390 220 C 385 220, 368 215, 368 205 C 368 198, 380 195, 390 195 Z" fill="#222"/>
+              
+              <!-- Annoyed / Smug mouth line -->
+              <path d="M 372 218 Q 390 228 408 218" fill="none" stroke="#442605" stroke-width="3" stroke-linecap="round"/>
+              
+              <!-- Confident Eyebrows -->
+              <path d="M 320 145 Q 340 138 355 145" fill="none" stroke="#8C4E07" stroke-width="4" stroke-linecap="round"/>
+              <path d="M 365 145 Q 380 138 395 145" fill="none" stroke="#8C4E07" stroke-width="4" stroke-linecap="round"/>
+
+              <!-- THE COOLING GLASSES / SUNGLASSES -->
+              <g id="dog-sunglasses">
+                <!-- Frame Bridge -->
+                <path d="M 345 168 Q 365 160 380 168" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+                
+                <!-- Left Lens -->
+                <polygon points="315,160 355,160 350,188 322,188" fill="#111420" stroke="#000" stroke-width="3"/>
+                <!-- Right Lens -->
+                <polygon points="370,160 410,160 405,188 377,188" fill="#111420" stroke="#000" stroke-width="3"/>
+
+                <!-- Lens Reflection Glint Slits -->
+                <g class="sunglasses-glint">
+                  <line x1="324" y1="164" x2="338" y2="184" stroke="rgba(255,255,255,0.75)" stroke-width="3" stroke-linecap="round"/>
+                  <line x1="379" y1="164" x2="393" y2="184" stroke="rgba(255,255,255,0.75)" stroke-width="3" stroke-linecap="round"/>
+                </g>
+              </g>
+            </g>
+          </g>
+
+          <!-- ==================== THE AI MACHINE ("PATTYDE VAAL AI™") ==================== -->
+          <g id="ai-machine-group" style="transition: opacity 0.6s ease, transform 0.6s ease;">
+            <!-- Main Machine Console Body -->
+            <rect x="520" y="160" width="220" height="290" rx="18" fill="url(#machineMetal)" stroke="var(--panel-border)" stroke-width="3"/>
+            
+            <!-- Warning Hazard Stripes Top & Bottom -->
+            <path d="M 520 160 L 740 160 L 740 180 L 520 180 Z" fill="#FFB703"/>
+            <path d="M 530 160 L 550 180 M 570 160 L 590 180 M 610 160 L 630 180 M 650 160 L 670 180 M 690 160 L 710 180" stroke="#111" stroke-width="6"/>
+
+            <!-- Rotating Machine Cogs/Gears -->
+            <g transform="translate(680, 240)">
+              <g class="machine-cog">
+                <circle cx="0" cy="0" r="28" fill="#1B2844" stroke="#00F0FF" stroke-width="3"/>
+                <rect x="-6" y="-36" width="12" height="72" fill="#00F0FF" rx="3"/>
+                <rect x="-36" y="-6" width="72" height="12" fill="#00F0FF" rx="3"/>
+                <circle cx="0" cy="0" r="12" fill="#0E1626"/>
+              </g>
+            </g>
+
+            <g transform="translate(635, 275)">
+              <g class="machine-cog-rev">
+                <circle cx="0" cy="0" r="20" fill="#1B2844" stroke="#FFB703" stroke-width="2.5"/>
+                <rect x="-4" y="-26" width="8" height="52" fill="#FFB703" rx="2"/>
+                <rect x="-26" y="-4" width="52" height="8" fill="#FFB703" rx="2"/>
+                <circle cx="0" cy="0" r="8" fill="#0E1626"/>
+              </g>
+            </g>
+
+            <!-- Digital LED Screen on Machine -->
+            <rect x="540" y="325" width="180" height="75" rx="8" fill="#040811" stroke="rgba(0,240,255,0.4)" stroke-width="2"/>
+            <text x="550" y="345" fill="var(--neon-cyan)" font-family="monospace" font-size="11" font-weight="bold">PATTYDE VAAL AI™ v9.4</text>
+            <text x="550" y="365" fill="#FFF" font-family="monospace" font-size="10">ACCURACY: 100% (THEORY)</text>
+            <text x="550" y="385" fill="var(--neon-pink)" font-family="monospace" font-size="10">USEFULNESS: 0.00%</text>
+
+            <!-- Top Strobe Siren Beacon -->
+            <path d="M 610 160 L 650 160 L 642 140 L 618 140 Z" fill="#334155"/>
+            <ellipse id="machine-beacon" cx="630" cy="138" rx="14" ry="10" fill="#FF3366" filter="url(#neonGlowGold)"/>
+
+            <!-- THE LARGE CYLINDRICAL PIPE / TUBE OPENING -->
+            <g id="machine-tube-group">
+              <!-- Internal Chamber behind pipe opening -->
+              <rect x="500" y="235" width="130" height="50" rx="6" fill="#071324" stroke="rgba(0,240,255,0.5)" stroke-width="2"/>
+              
+              <!-- Plasma glow inside tube -->
+              <rect x="510" y="242" width="110" height="36" rx="4" fill="url(#cyanPlasma)" opacity="0.45"/>
+
+              <!-- Laser Scanning Beam -->
+              <line id="machine-laser" class="tube-laser" x1="510" y1="240" x2="510" y2="280" stroke="#FF2A85" stroke-width="4" filter="url(#neonGlowCyan)"/>
+
+              <!-- Tube Cylinder Barrel -->
+              <path d="M 505 230 L 550 230 L 550 290 L 505 290 Z" fill="url(#machineMetal)" stroke="#395079" stroke-width="2"/>
+              
+              <!-- Funnel Rim Lip -->
+              <ellipse cx="505" cy="260" rx="14" ry="30" fill="#1C2B47" stroke="#00F0FF" stroke-width="3"/>
+              
+              <!-- Tube Suction Magnetic Aura Ring (glows when tail is close) -->
+              <ellipse id="tube-suction-aura" class="tube-intake-aura" cx="505" cy="260" rx="20" ry="38" fill="none" stroke="var(--neon-cyan)" stroke-width="4" stroke-dasharray="6,4"/>
+            </g>
+
+            <!-- Industrial Pressure Dial with Animated Needle -->
+            <circle cx="560" cy="235" r="22" fill="#0A101D" stroke="#FFB703" stroke-width="2"/>
+            <text x="560" y="226" font-size="7" fill="#888" font-family="monospace" text-anchor="middle">PSI</text>
+            <line id="gauge-needle" x1="560" y1="235" x2="572" y2="225" stroke="#FF3366" stroke-width="2" stroke-linecap="round"/>
+          </g>
+
+          <!-- ==================== THE SCIENTIST OPERATOR (PROF. CHACKO) ==================== -->
+          <g id="scientist-group" style="transition: opacity 0.5s ease, transform 0.5s ease;">
+            <!-- Body & Lab Coat -->
+            <path d="M 780 320 L 760 455 L 850 455 L 835 320 Z" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+            <path d="M 795 320 L 795 455" stroke="#94A3B8" stroke-width="2"/>
+            
+            <!-- Scientist ID Badge -->
+            <rect x="768" y="340" width="22" height="14" rx="2" fill="#00F0FF"/>
+            <text x="779" y="350" font-size="6" font-family="sans-serif" font-weight="bold" fill="#000" text-anchor="middle">PROF</text>
+
+            <!-- Arms & Hands -->
+            <!-- Left arm holding clipboard -->
+            <path d="M 770 320 Q 740 360 755 385" fill="none" stroke="#F8FAFC" stroke-width="14" stroke-linecap="round"/>
+            <rect x="740" y="375" width="24" height="32" rx="3" fill="#D97706" transform="rotate(-15, 752, 391)"/>
+            <rect x="744" y="380" width="16" height="22" fill="#FFF" transform="rotate(-15, 752, 391)"/>
+
+            <!-- Right arm pointing or on machine lever -->
+            <path id="scientist-arm" d="M 830 320 Q 855 360 840 395" fill="none" stroke="#F8FAFC" stroke-width="14" stroke-linecap="round"/>
+
+            <!-- Head & Face -->
+            <circle cx="800" cy="270" r="32" fill="#FBBF24"/>
+            
+            <!-- Scientist Wild Hair -->
+            <path d="M 765 260 C 750 230, 770 215, 800 220 C 830 215, 850 230, 835 260 C 845 240, 810 230, 765 260 Z" fill="#475569"/>
+
+            <!-- Big Round Eyeglasses -->
+            <circle cx="790" cy="265" r="11" fill="rgba(255,255,255,0.7)" stroke="#1E293B" stroke-width="3"/>
+            <circle cx="814" cy="265" r="11" fill="rgba(255,255,255,0.7)" stroke="#1E293B" stroke-width="3"/>
+            <line x1="801" y1="265" x2="803" y2="265" stroke="#1E293B" stroke-width="3"/>
+            <circle cx="792" cy="265" r="3" fill="#000"/>
+            <circle cx="816" cy="265" r="3" fill="#000"/>
+
+            <!-- Classic Kerala Scientist Mustache -->
+            <path d="M 790 282 Q 802 288 814 282 Q 802 284 790 282 Z" fill="#1E293B"/>
+
+            <!-- Confident Smile / Mouth -->
+            <path id="scientist-mouth" d="M 793 292 Q 802 300 811 292" fill="none" stroke="#831843" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+
+          <!-- Particle Spark Container (dynamic JS elements injected here) -->
+          <g id="svg-spark-layer"></g>
+        </svg>
+
+        <!-- Viewport Bottom Control Buttons -->
+        <div class="viewport-actions" id="viewport-actions">
+          <button id="btn-action-primary" class="btn-action btn-gold">
+            BEGIN MISSION 01: MANUAL STRAIGHTEN ➔
+          </button>
+        </div>
+      </section>
+
+      <!-- Right HUD: AI Machine Diagnostics -->
+      <aside class="hud-panel" id="machine-hud">
+        <div class="panel-header">
+          <span class="panel-title">⚙️ AI DIAGNOSTICS</span>
+          <span class="panel-sub">PATTYDE VAAL AI™</span>
+        </div>
+
+        <div class="stat-list">
+          <div class="stat-item">
+            <span class="stat-label">AI Power:</span>
+            <span class="stat-value success">100% [ONLINE]</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Tail Analysis:</span>
+            <span class="stat-value warning" id="stat-ai-analysis">READY</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Straightening Accuracy:</span>
+            <span class="stat-value success">100.0%</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Project Usefulness:</span>
+            <span class="stat-value danger">0.00000%</span>
+          </div>
+        </div>
+
+        <!-- Telemetry Aura Comparison -->
+        <div class="aura-container">
+          <span style="font-size: 11px; color: var(--neon-cyan); font-family: var(--font-mono); font-weight: bold;">
+            AURA TELEMETRY:
+          </span>
+
+          <div class="aura-row">
+            <div class="aura-label-row">
+              <span style="color: var(--neon-gold);">DOG AURA:</span>
+              <span id="aura-dog-val" style="color: var(--neon-gold);">100%</span>
+            </div>
+            <div class="aura-bar-bg">
+              <div class="aura-bar-dog" id="aura-dog-bar"></div>
+            </div>
+          </div>
+
+          <div class="aura-row">
+            <div class="aura-label-row">
+              <span style="color: var(--text-muted);">HUMAN AURA:</span>
+              <span id="aura-human-val" style="color: var(--text-muted);">0%</span>
+            </div>
+            <div class="aura-bar-bg">
+              <div class="aura-bar-human" id="aura-human-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-time scientific telemetry log -->
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 10px; font-family: monospace; font-size: 10.5px; color: #7dd3fc; height: 110px; overflow-y: auto;" id="telemetry-log">
+          <div>[SYSTEM] Booting quantum tail analyzer...</div>
+          <div>[KERNEL] Proverb verification module loaded.</div>
+          <div>[PATTY] Tail curl coefficient: $\infty$</div>
+        </div>
+
+        <button id="btn-easter-egg" class="btn-icon" style="justify-content: center; margin-top: auto;">
+          🐕 Ask The Dog
+        </button>
+      </aside>
+    </main>
+  </div>
+
+  <!-- STAGE 8: FINAL RESULT CERTIFICATE MODAL OVERLAY -->
+  <div id="stage-final" class="overlay-stage hidden">
+    <div class="certificate-card">
+      <div class="cert-header">
+        <div class="intro-badge" style="align-self: center;">OFFICIAL USELESSNESS ACCREDITATION</div>
+        <h2 class="cert-title">CONGRATULATIONS! 🎉</h2>
+        <p class="cert-sub">You have successfully wasted your time by doing a totally useless thing.</p>
+      </div>
+
+      <div class="cert-stats-grid">
+        <div class="cert-stat-box">
+          <div class="cert-stat-label">Tail Straightness</div>
+          <div class="cert-stat-val" style="color: var(--neon-pink);">0.00% (ABSOLUTE CURL)</div>
+        </div>
+        <div class="cert-stat-box">
+          <div class="cert-stat-label">Dog Aura</div>
+          <div class="cert-stat-val" style="color: var(--neon-gold);">100% UNBOTHERED 😎</div>
+        </div>
+        <div class="cert-stat-box">
+          <div class="cert-stat-label">Scientific Value</div>
+          <div class="cert-stat-val" style="color: var(--neon-cyan);">0% [NOT DETECTED]</div>
+        </div>
+        <div class="cert-stat-box">
+          <div class="cert-stat-label">Time Wasted</div>
+          <div class="cert-stat-val" style="color: var(--neon-green);">SUCCESSFULLY ⏱️</div>
+        </div>
+      </div>
+
+      <div class="cert-conclusion">
+        <strong>RESEARCH CONCLUSION:</strong><br>
+        “The dog’s tail remains aggressively curved. Humanity has learned absolutely nothing. 
+        പട്ടിയുടെ വാൽ പന്തീരാണ്ടു കൊല്ലം കുഴലിലിട്ടാലും നേരെയാവില്ല എന്നത് വീണ്ടും തെളിയിക്കപ്പെട്ടിരിക്കുന്നു.”
+      </div>
+
+      <!-- Dialogue from Dog on Certificate -->
+      <div style="background: rgba(255,255,255,0.06); padding: 12px; border-radius: 12px; font-family: var(--font-heading);">
+        <span style="color: var(--neon-gold); font-weight: bold;">PATTY SAYS: </span>
+        <span id="final-dog-speech">“എന്റെ വാൽ നിവർത്താൻ നോക്കിയ നിനക്ക് ഇപ്പോൾ മനസ്സിലായോ? എത്ര വളച്ചാലും ഞാൻ നിവരില്ലെടാ! 😎”</span>
+      </div>
+
+      <div class="cert-buttons">
+        <button id="btn-try-again" class="btn-action btn-gold">
+          🔄 Try Again (Dog Gets Angrier)
+        </button>
+        <button id="btn-make-worse" class="btn-action btn-danger">
+          💥 Make It Worse
+        </button>
+        <button id="btn-read-paper" class="btn-action btn-primary">
+          📄 Read Fake Research Paper
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAKE RESEARCH PAPER MODAL -->
+  <div id="paper-modal" class="modal-backdrop hidden">
+    <div class="paper-card">
+      <button id="btn-close-paper" class="paper-close-btn">&times;</button>
+      <div class="paper-header">
+        <div class="paper-title">A Deeply Unnecessary Study on the Non-Straightening Behaviour of Canine Tails</div>
+        <div class="paper-authors">Prof. Chacko, Patty the Golden Retriever (Senior Co-Author)</div>
+        <div style="font-size: 11px; color: #666; margin-top: 4px;">Department of Completely Useless Inventions, Thinker Hub University</div>
+      </div>
+
+      <div class="paper-abstract">
+        <strong>Abstract—</strong> Over an agonizing duration of multiple human attempts and industrial AI intervention, 
+        we subjected a standard Golden Retriever-ish tail to extreme mechanical tension and high-voltage vacuum tube insertion. 
+        Results unequivocally demonstrate that the tail’s angular curvature $\theta$ satisfies $\lim_{t \to \infty} \text{Straightness}(t) = 0\%$. 
+        The ancient Malayalam axiom regarding canine tails in cylindrical conduits is mathematically and empirically indestructible.
+      </div>
+
+      <div class="paper-body">
+        <div class="paper-section-title">1. Introduction</div>
+        Canine tails have historically exhibited non-linear topological obstinacy. Despite 200% applied AI science, our experimental apparatus (PATTYDE VAAL AI™) experienced catastrophic failure when confronted with pure canine indifference.
+
+        <div class="paper-section-title">2. Mathematical Formulation</div>
+        The straightening failure is governed by Patty's Resistance Principle:
+        <div class="paper-formula">
+          Aura_{dog} = 100% &nbsp;&nbsp;|&nbsp;&nbsp; Aura_{human} = 0% &nbsp;&nbsp;|&nbsp;&nbsp; Straightness \equiv 0
+        </div>
+
+        <div class="paper-section-title">3. Conclusion & Practical Applications</div>
+        There are none. We spent college hackathon hours building this machine and achieving zero useful outcomes. We recommend the operator abandon research and give the dog a biscuit.
+      </div>
+    </div>
+  </div>
+
+  <!-- Script includes -->
+  <script src="audio.js"></script>
+  <script src="dialogue.js"></script>
+  <script src="tail-physics.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
